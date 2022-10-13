@@ -28,3 +28,8 @@
 .max-w {
     min-width: 105px;
 }
+
+.logo {
+    width: 30px;
+    margin-left: 10px;
+}
