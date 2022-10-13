@@ -33,3 +33,26 @@
     width: 30px;
     margin-left: 10px;
 }
+
+.crafting .cr-row img {
+    width: 6vw;
+    padding: 0;
+    min-width: 96px;
+    float: none;
+}
+
+.result img {
+    width: 6vw;
+    min-width: 128px;
+}
+.cr-row {
+    white-space: nowrap;
+}
+
+@media only screen and (max-width: 768px) {
+    .arrow {
+        padding-top: 4vh;
+        padding-bottom: 3vh;
+        transform: rotateZ(90deg);
+    }
+}
