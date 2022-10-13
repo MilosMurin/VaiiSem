@@ -16,25 +16,31 @@
 
 		<div class="row vh-100">
 			<div class="col-md-6 pt-5 text-center d-flex align-items-center justify-content-center">
-				<img class="w-75 center-block img-fluid no-select" draggable="false" src="../res/crafting_table.png"
+				<img class="w-75 center-block img-fluid no-select min-w" draggable="false" src="../res/crafting_table.png"
 				     alt="Crafting table">
+				<a class="on-top" href="ccMain.html">
+					<img class="img-fluid max-w" src="../res/calculator.png" alt="Calculator"
+					     data-toggle="tooltip" data-placement="top"  title="Open crafting calculator">
+				</a>
 			</div>
 
 			<div class="col-md-6 pt-5 text-center">
 				<h3 class="h3 mt-5">Login to customize crafting recipes!</h3>
 
-				<form action="">
+				<form>
 					<div class="row mb-3 mt-3 mx-auto w-75">
 						<label for="name" class="col-sm form-label my-form-label">Username:</label>
-						<input type="text" class="col-sm form-control" id="name" placeholder="Create a username" name="name">
+						<input type="text" class="col-sm form-control" id="name" placeholder="Enter username"
+						       name="name">
 					</div>
-<!--					<div class="row mb-3 mt-3 mx-auto w-75">-->
-<!--						<label for="email" class="col-sm form-label my-form-label">Email:</label>-->
-<!--						<input type="email" class="col-sm form-control" id="email" placeholder="Enter email" name="email">-->
-<!--					</div>-->
+					<!--					<div class="row mb-3 mt-3 mx-auto w-75">-->
+					<!--						<label for="email" class="col-sm form-label my-form-label">Email:</label>-->
+					<!--						<input type="email" class="col-sm form-control" id="email" placeholder="Enter email" name="email">-->
+					<!--					</div>-->
 					<div class="row mb-3 mx-auto w-75">
 						<label for="pwd" class="col-sm form-label my-form-label">Password:</label>
-						<input type="password" class="col-sm form-control" id="pwd" placeholder="Enter password" name="pswd">
+						<input type="password" class="col-sm form-control" id="pwd" placeholder="Enter password"
+						       name="pswd">
 					</div>
 					<div class="form-check mb-3">
 						<label class="form-check-label">
