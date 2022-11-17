@@ -35,6 +35,7 @@ $user = $data["user"];
 	</div>
 </form>
 <div class="row mb-3 mt-4 mx-auto w-50 d-flex align-items-center justify-content-center">
-	<button class="btn btn-primary col-3 me-2">Save changes</button>
-	<button class="btn btn-danger col-3">Delete account</button>
+	<button id="submit" class="btn btn-primary col-3 me-2">Save changes</button>
+	<button id="delete" class="btn btn-danger col-3">Delete account</button>
 </div>
+<script src="../../../public/js/user.js"></script>
