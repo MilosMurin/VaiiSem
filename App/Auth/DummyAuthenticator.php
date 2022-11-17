@@ -3,48 +3,48 @@
 namespace App\Auth;
 
 use App\Core\IAuthenticator;
+use Exception;
+use App\Models\User;
 
 /**
  * Class DummyAuthenticator
  * Basic implementation of user authentication
  * @package App\Auth
  */
-class DummyAuthenticator implements IAuthenticator
-{
-    const LOGIN = "admin";
-    const PASSWORD_HASH = '$2y$10$GRA8D27bvZZw8b85CAwRee9NH5nj4CQA6PDFMc90pN9Wi4VAWq3yq'; // admin
-    const USERNAME = "Admin";
+class DummyAuthenticator implements IAuthenticator {
 
     /**
      * DummyAuthenticator constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         session_start();
     }
 
     /**
      * Verify, if the user is in DB and has his password is correct
-     * @param $login
-     * @param $password
+     * @param $userLogin
+     * @param $pass
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
-    function login($login, $password): bool
-    {
-        if ($login == self::LOGIN && password_verify($password, self::PASSWORD_HASH)) {
-            $_SESSION['user'] = self::USERNAME;
-            return true;
-        } else {
+    function login($userLogin, $pass): bool {
+        $users = User::getAll("name=?", [$userLogin]);
+        if (sizeof($users) == 0) {
             return false;
+        } else {
+            $pwd = $users[0]->getPassword();
+            if (password_verify($pass, $pwd)) {
+                $_SESSION['user'] = $userLogin;
+                return true;
+            }
         }
+        return false;
     }
 
     /**
      * Logout the user
      */
-    function logout() : void
-    {
+    function logout(): void {
         if (isset($_SESSION["user"])) {
             unset($_SESSION["user"]);
             session_destroy();
@@ -54,19 +54,18 @@ class DummyAuthenticator implements IAuthenticator
     /**
      * Get the name of the logged-in user
      * @return string
+     * @throws Exception
      */
-    function getLoggedUserName(): string
-    {
+    function getLoggedUserName(): string {
 
-        return isset($_SESSION['user']) ? $_SESSION['user'] : throw new \Exception("User not logged in");
+        return $_SESSION['user'] ?? throw new Exception("User not logged in");
     }
 
     /**
      * Get the context of the logged-in user
      * @return string
      */
-    function getLoggedUserContext(): mixed
-    {
+    function getLoggedUserContext(): mixed {
         return null;
     }
 
@@ -74,8 +73,7 @@ class DummyAuthenticator implements IAuthenticator
      * Return if the user is authenticated or not
      * @return bool
      */
-    function isLogged(): bool
-    {
+    function isLogged(): bool {
         return isset($_SESSION['user']) && $_SESSION['user'] != null;
     }
 
@@ -83,8 +81,7 @@ class DummyAuthenticator implements IAuthenticator
      * Return the id of the logged-in user
      * @return mixed
      */
-    function getLoggedUserId(): mixed
-    {
+    function getLoggedUserId(): mixed {
         return $_SESSION['user'];
     }
 }

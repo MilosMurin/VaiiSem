@@ -1,5 +1,6 @@
 <?php
 /** @var string $contentHTML */
+
 /** @var IAuthenticator $auth */
 
 use App\Config\Configuration;
@@ -37,19 +38,25 @@ use App\Core\IAuthenticator;
 				<li class="nav-item">
 					<a class="nav-link" href="?c=calculator">Crafting calculator</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="?c=upload">Recipe creator</a>
-				</li>
+                <?php if ($auth->isLogged()) { ?>
+					<li class="nav-item">
+						<a class="nav-link" href="?c=upload">Recipe creator</a>
+					</li>
+                <?php } ?>
 			</ul>
 		</div>
         <?php if ($auth->isLogged()) { ?>
-			<span class="navbar-text">Prihlásený používateľ: <b><?= $auth->getLoggedUserName() ?></b></span>
 			<ul class="navbar-nav ms-auto">
 				<li class="nav-item">
-					<a class="nav-link" href="?c=auth&a=logout">Odhlásenie</a>
+					<a class="nav-link" href="?c=user">
+						Prihlásený používateľ: <b><?= $auth->getLoggedUserName() ?></b>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="?c=home&a=logout">Odhlásenie</a>
 				</li>
 			</ul>
-        <?php }?>
+        <?php } ?>
 	</nav>
 	<div class="container-fluid mt-3">
 		<div class="web-content">

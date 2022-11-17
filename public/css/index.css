@@ -41,6 +41,15 @@
     float: none;
 }
 
+.register {
+    display: none;
+}
+
+.signup {
+    padding: 1px 1px 3px;
+    color: blue;
+}
+
 .result img {
     width: 6vw;
     min-width: 128px;

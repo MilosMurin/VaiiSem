@@ -11,15 +11,13 @@ use App\Core\Responses\ViewResponse;
  * Example class of a controller
  * @package App\Controllers
  */
-class AdminController extends AControllerBase
-{
+class AdminController extends AControllerBase {
     /**
      * Authorize controller actions
      * @param $action
      * @return bool
      */
-    public function authorize($action)
-    {
+    public function authorize($action): bool {
         return $this->app->getAuth()->isLogged();
     }
 
@@ -27,8 +25,7 @@ class AdminController extends AControllerBase
      * Example of an action (authorization needed)
      * @return Response|ViewResponse
      */
-    public function index(): Response
-    {
+    public function index(): Response {
         return $this->html();
     }
 
@@ -36,8 +33,7 @@ class AdminController extends AControllerBase
      * Example of an action accessible without authorization
      * @return ViewResponse
      */
-    public function contact(): Response
-    {
+    public function contact(): Response {
         return $this->html();
     }
 }

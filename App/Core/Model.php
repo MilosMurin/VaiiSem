@@ -4,6 +4,7 @@ namespace App\Core;
 
 use App\Core\DB\Connection;
 use App\Helpers\Inflect;
+use Exception;
 use PDO;
 use PDOException;
 
@@ -13,17 +14,15 @@ use PDOException;
  * Allows basic CRUD operations
  * @package App\Core\Storage
  */
-abstract class Model implements \JsonSerializable
-{
+abstract class Model implements \JsonSerializable {
     private static ?Connection $connection = null;
 
     /**
      * Get array of column names from the associated model table
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
-    public static function getDbColumns(): array
-    {
+    public static function getDbColumns(): array {
         self::connect();
         try {
             $sql = "DESCRIBE " . static::getTableName();
@@ -31,7 +30,7 @@ abstract class Model implements \JsonSerializable
             $stmt->execute([]);
             return array_column($stmt->fetchAll(), 'Field');
         } catch (PDOException $e) {
-            throw new \Exception('Query failed: ' . $e->getMessage(), 0, $e);
+            throw new Exception('Query failed: ' . $e->getMessage(), 0, $e);
         }
     }
 
@@ -39,8 +38,7 @@ abstract class Model implements \JsonSerializable
      * Get table name from model class name
      * @return string
      */
-    public static function getTableName(): string
-    {
+    public static function getTableName(): string {
         $arr = explode("\\", get_called_class());
         return Inflect::pluralize(strtolower(end($arr)));
     }
@@ -49,18 +47,16 @@ abstract class Model implements \JsonSerializable
      * Return default primary key column name
      * @return string
      */
-    public static function getPkColumnName() : string
-    {
+    public static function getPkColumnName(): string {
         return 'id';
     }
 
     /**
      * Connect to DB
      * @return null
-     * @throws \Exception
+     * @throws Exception
      */
-    private static function connect(): void
-    {
+    private static function connect(): void {
         self::$connection = Connection::connect();
     }
 
@@ -69,10 +65,9 @@ abstract class Model implements \JsonSerializable
      * @param string $whereClause Additional where Statement
      * @param array $whereParams Parameters for where
      * @return static[]
-     * @throws \Exception
+     * @throws Exception
      */
-    static public function getAll(string $whereClause = '', array $whereParams = [], $orderBy = ''): array
-    {
+    static public function getAll(string $whereClause = '', array $whereParams = [], $orderBy = ''): array {
         self::connect();
         try {
             $sql = "SELECT * FROM `" . static::getTableName() . "`" . ($whereClause == '' ? '' : " WHERE $whereClause") . ($orderBy == '' ? '' : " ORDER BY $orderBy");
@@ -81,7 +76,7 @@ abstract class Model implements \JsonSerializable
             $models = $stmt->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, static::class);
             return $models;
         } catch (PDOException $e) {
-            throw new \Exception('Query failed: ' . $e->getMessage(), 0, $e);
+            throw new Exception('Query failed: ' . $e->getMessage(), 0, $e);
         }
     }
 
@@ -89,10 +84,9 @@ abstract class Model implements \JsonSerializable
      * Gets one model by primary key
      * @param $id
      * @return static|null
-     * @throws \Exception
+     * @throws Exception
      */
-    static public function getOne($id): ?static
-    {
+    static public function getOne($id): ?static {
         if ($id == null) return null;
 
         self::connect();
@@ -103,17 +97,16 @@ abstract class Model implements \JsonSerializable
             $stmt->execute([$id]);
             return $stmt->fetch();
         } catch (PDOException $e) {
-            throw new \Exception('Query failed: ' . $e->getMessage(), 0, $e);
+            throw new Exception('Query failed: ' . $e->getMessage(), 0, $e);
         }
     }
 
     /**
      * Save the current model to DB (if model id is set, update it, else create a new model)
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
-    public function save(): void
-    {
+    public function save(): void {
         self::connect();
         try {
             $data = array_fill_keys(static::getDbColumns(), null);
@@ -136,16 +129,15 @@ abstract class Model implements \JsonSerializable
                 $stmt->execute($data);
             }
         } catch (PDOException $e) {
-            throw new \Exception('Query failed: ' . $e->getMessage(), 0, $e);
+            throw new Exception('Query failed: ' . $e->getMessage(), 0, $e);
         }
     }
 
     /**
      * Delete current model from DB
-     * @throws \Exception If model not exists, throw an exception
+     * @throws Exception If model not exists, throw an exception
      */
-    public function delete()
-    {
+    public function delete() {
         if ($this->{static::getPkColumnName()} == null) {
             return;
         }
@@ -155,10 +147,10 @@ abstract class Model implements \JsonSerializable
             $stmt = self::$connection->prepare($sql);
             $stmt->execute([$this->{static::getPkColumnName()}]);
             if ($stmt->rowCount() == 0) {
-                throw new \Exception('Model not found!');
+                throw new Exception('Model not found!');
             }
         } catch (PDOException $e) {
-            throw new \Exception('Query failed: ' . $e->getMessage(), 0, $e);
+            throw new Exception('Query failed: ' . $e->getMessage(), 0, $e);
         }
     }
 
@@ -166,8 +158,7 @@ abstract class Model implements \JsonSerializable
      * Return DB connection, ready for custom developer use
      * @return null
      */
-    public static function getConnection()
-    {
+    public static function getConnection() {
         return self::$connection;
     }
 
@@ -175,8 +166,7 @@ abstract class Model implements \JsonSerializable
      * Default implementation of JSON serialize method
      * @return array
      */
-    public function jsonSerialize(): array
-    {
+    public function jsonSerialize(): array {
         return get_object_vars($this);
     }
 
@@ -185,10 +175,9 @@ abstract class Model implements \JsonSerializable
      * @param string $name
      * @param $value
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
-    public function __set(string $name, $value): void
-    {
-        throw new \Exception("Attribute `$name` doesn't exist in the model " . get_called_class() . ".");
+    public function __set(string $name, $value): void {
+        throw new Exception("Attribute `$name` doesn't exist in the model " . get_called_class() . ".");
     }
 }
