@@ -59,7 +59,14 @@ use App\Config\Configuration;
 
 					<p id="loginText" class="pt-3"></p>
 				</div>
-            <?php } ?>
+            <?php } else { ?>
+	            <div class="col-md-6 pt-5 text-center d-flex align-items-center justify-content-center">
+		            <a href="?c=upload">
+			            <img class="w-100 pt-5" src="../../../public/res/crafting_add.png" alt="Calculator"
+			                 data-toggle="tooltip" data-placement="top" title="Open recipe creator">
+		            </a>
+	            </div>
+			<?php } ?>
 		</div>
 
 	</div>
