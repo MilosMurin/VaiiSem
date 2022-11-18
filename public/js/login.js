@@ -77,6 +77,10 @@ function validateAndSend() {
     console.log(name.value)
     if (!login) {
         const email = document.getElementById("email")
+        if (!email.checkValidity()) {
+            message.innerText = "Emails is not valid"
+            return
+        }
         const repEmail = document.getElementById("repEmail")
         if (email.value !== repEmail.value) {
             message.innerText = "Emails are not the same"
@@ -84,7 +88,7 @@ function validateAndSend() {
         }
         const pwd = document.getElementById("pwd")
         const bigLetter = new RegExp("[A-Z]")
-        const number = new RegExp("[1-9]")
+        const number = new RegExp("[0-9]")
         if (!(number.test(pwd.value) && bigLetter.test(pwd.value))) {
             message.innerText = "Password must contain at least one uppercase letter and one number"
             return

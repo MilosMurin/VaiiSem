@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Core\AControllerBase;
 use App\Core\Responses\Response;
+use App\Helpers\Utils;
 use Exception;
 use App\Models\User;
 
@@ -33,18 +34,30 @@ class HomeController extends AControllerBase {
         if (isset($formData["name"])) {
             if ($formData["name"] != "" && $formData["pswd"] != "") {
                 if ($formData["email"] != "") {
-                    $reg = $this->register($formData["name"], $formData["pswd"], $formData["email"]);
-                    if ($reg) {
-                        return $this->redirect('?c=home');
+                    if (Utils::checkName($formData["name"])) {
+                        if (Utils::checkEmail($formData["email"])) {
+                            if (Utils::checkPassword($formData["pswd"])) {
+                                $reg = $this->register($formData["name"], $formData["pswd"], $formData["email"]);
+                                if ($reg) {
+                                    return $this->redirect('?c=home');
+                                } else {
+                                    $data = ["message" => "Something went wrong!"];
+                                }
+                            } else {
+                                $data = ["message" => "Password must contain at least one uppercase letter and one number!"];
+                            }
+                        } else {
+                            $data = ["message" => "Email is invalid or already taken!"];
+                        }
                     } else {
-                        $data = ["message" => "Something went wrong!"];
+                        $data = ["message" => "Username already taken!"];
                     }
                 } else {
                     $logged = $this->app->getAuth()->login($formData['name'], $formData['pswd']);
                     if ($logged) {
                         return $this->redirect('?c=home');
                     } else {
-                        $data = ["message" => "Incorrect name or username!"];
+                        $data = ["message" => "Incorrect name or password!"];
                     }
                 }
             }
