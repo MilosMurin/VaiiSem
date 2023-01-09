@@ -77,6 +77,14 @@ function validateAndSend() {
     console.log(name.value)
     if (!login) {
         const email = document.getElementById("email")
+        if (name.value === "") {
+            message.innerText = "Name cannot be empty"
+            return
+        }
+        if (email.value === "") {
+            message.innerText = "Email cannot be empty"
+            return
+        }
         if (!email.checkValidity()) {
             message.innerText = "Emails is not valid"
             return

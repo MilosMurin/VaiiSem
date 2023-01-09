@@ -11,18 +11,19 @@ class User extends Model {
     protected string $password = "";
     protected string $email = "";
 
+    public static function create(string $name, string $password, string $email): User {
+        $instance = new self();
+        $instance->name = $name;
+        $instance->password = $password;
+        $instance->email = $email;
+        return $instance;
+    }
+
     /**
      * @return int
      */
     public function getId(): int {
         return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void {
-        $this->id = $id;
     }
 
     /**

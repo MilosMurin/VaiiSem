@@ -79,10 +79,7 @@ class HomeController extends AControllerBase {
         if (sizeof($users) > 0) {
             return false;
         } else {
-            $newUser = new User();
-            $newUser->setName($login);
-            $newUser->setEmail($email);
-            $newUser->setPassword(password_hash($password, PASSWORD_DEFAULT));
+            $newUser = User::create($login, password_hash($password, PASSWORD_DEFAULT), $email);
             try {
                 $newUser->save();
                 $_SESSION['user'] = $login;

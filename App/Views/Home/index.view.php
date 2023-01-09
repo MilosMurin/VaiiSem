@@ -10,7 +10,7 @@ use App\Config\Configuration;
 	<div class="container-fluid">
 
 		<div class="row pt-5">
-			<div class="col-md-6 pt-5 text-center d-flex align-items-center justify-content-center">
+			<div class="col-md-6 pt-3 text-center d-flex align-items-center justify-content-center">
 				<a href="?c=calculator">
 					<img class="w-100 pt-5" src="../../../public/res/calculator.png" alt="Calculator"
 					     data-toggle="tooltip" data-placement="top" title="Open crafting calculator">
@@ -18,7 +18,7 @@ use App\Config\Configuration;
 			</div>
 
             <?php if (!$auth->isLogged()) { ?>
-				<div class="col-md-6 pt-5 text-center">
+				<div class="col-md-6 pt-3 text-center">
 					<h3 id="lgnFromH" class="h3 mt-5"></h3>
 
 					<form id="loginForm" method="post" action="<?= Configuration::LOGIN_URL ?>">
