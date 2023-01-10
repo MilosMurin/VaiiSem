@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Core\Model;
-use App\Helpers\LearnInfo;
+use App\Helpers\Enums\LearnInfo;
 
 class UserLearner extends Model {
 

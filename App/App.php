@@ -15,8 +15,7 @@ use App\Core\Router;
  * Main Application class
  * @package App
  */
-class App
-{
+class App {
     /**
      * @var Router
      */
@@ -32,8 +31,7 @@ class App
     /**
      * App constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->router = new Router();
         $this->request = new Request();
 
@@ -50,8 +48,7 @@ class App
      * Runs the application
      * @throws \Exception
      */
-    public function run()
-    {
+    public function run() {
         ob_start();
 
         // get a controller and action from URL
@@ -82,7 +79,10 @@ class App
 
         // if SQL debugging in configuration is allowed, display all SQL queries
         if (Configuration::DEBUG_QUERY) {
-            $queries = array_map(function ($q) {$lines = explode("\n", $q); return '<pre>' . (substr($lines[1], 0, 7) == 'Params:'? 'Sent '.$lines[0] : $lines[1]) .'</pre>';} , Connection::getQueryLog());
+            $queries = array_map(function ($q) {
+                $lines = explode("\n", $q);
+                return '<pre>' . (substr($lines[1], 0, 7) == 'Params:' ? 'Sent ' . $lines[0] : $lines[1]) . '</pre>';
+            }, Connection::getQueryLog());
             echo implode(PHP_EOL . PHP_EOL, $queries);
         }
     }
@@ -90,24 +90,21 @@ class App
     /**
      * @return Router
      */
-    public function getRouter(): Router
-    {
+    public function getRouter(): Router {
         return $this->router;
     }
 
     /**
      * @return Request
      */
-    public function getRequest(): Request
-    {
+    public function getRequest(): Request {
         return $this->request;
     }
 
     /**
      * @return IAuthenticator|null
      */
-    public function getAuth(): ?IAuthenticator
-    {
+    public function getAuth(): ?IAuthenticator {
         return $this->auth;
     }
 }

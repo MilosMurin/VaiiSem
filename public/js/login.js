@@ -27,11 +27,11 @@ function setLoginText() {
         lgnTxt.innerHTML = "Don't have an account " +
             "<button id=\"changeBtn\" class=\"btn signup\">create</button>" +
             " one"
-        heading.innerText = "Login to customize crafting recipes!"
+        heading.innerText = "Login to upload new algorithms!"
     } else {
         lgnTxt.innerHTML = "Already have an account " +
             "<button id=\"changeBtn\" class=\"btn signup\">log in</button>"
-        heading.innerText = "Create an account to customize crafting recipes!"
+        heading.innerText = "Create an account to upload new algorithms!"
     }
 }
 

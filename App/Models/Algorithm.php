@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Core\Model;
-use App\Helpers\AlgorithmType;
+use App\Helpers\Enums\AlgorithmType;
 use InvalidArgumentException;
 
 class Algorithm extends Model {

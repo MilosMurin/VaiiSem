@@ -28,7 +28,7 @@ use App\Core\IAuthenticator;
 <body>
 	<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
 		<a class="navbar-brand" href="?c=home">
-			<img class="logo" src="../../public/res/crafting_table_top.png" alt="logo">
+			<img class="logo" src="../../public/res/cube.png" alt="logo">
 		</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
 			<span class="navbar-toggler-icon"></span>
@@ -36,11 +36,14 @@ use App\Core\IAuthenticator;
 		<div class="collapse navbar-collapse" id="collapsibleNavbar">
 			<ul class="navbar-nav">
 				<li class="nav-item">
-					<a class="nav-link" href="?c=calculator">Crafting calculator</a>
+					<a class="nav-link" href="?c=browser">Algorithm browser</a>
 				</li>
                 <?php if ($auth->isLogged()) { ?>
+	                <li class="nav-item">
+		                <a class="nav-link" href="?c=learner">Learner</a>
+	                </li>
 					<li class="nav-item">
-						<a class="nav-link" href="?c=upload">Recipe creator</a>
+						<a class="nav-link" href="?c=upload">Algorithm uploader</a>
 					</li>
                 <?php } ?>
 			</ul>
