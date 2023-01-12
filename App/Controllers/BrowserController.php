@@ -10,4 +10,12 @@ class BrowserController extends AControllerBase {
         return $this->html();
     }
 
+    public function browse(): Response {
+        if (isset($_GET['s']) && isset($_GET['t'])) {
+            return $this->html("", "browse");
+        } else {
+            return self::index();
+        }
+    }
+
 }

@@ -13,7 +13,7 @@ class Algorithm extends Model {
     protected string $type = "";
     protected int $size = 3; // depicts the size of the cube (3->3x3, 2->2x2...)
 
-    protected string $picture = ""; // gonna store compiled pictures or like i did it in in mobile app
+    protected string $picture = "";
 
     public static function create(string $name, string $type, int $size): Algorithm {
         $instance = new self();

@@ -27,8 +27,8 @@ class TopCubeSvg {
     }
 
 
-    public function getSVG(): string {
-        $start = sprintf("<svg width=\"%d\" height=\"%d\">\n", 790, 790);
+    public function getSVG(int $width, int $height): string {
+        $start = sprintf("<svg width=\"%d\" height=\"%d\" viewBox='0 0 790 790'>\n", $width, $height);
         for ($i = 0; $i < 3; $i++) {
             for ($j = 0; $j < 3; $j++) { // top
                 $start .= $this->getSvgSquare($i, $j);

@@ -11,11 +11,11 @@ use App\Auth\DummyAuthenticator;
  */
 class Configuration
 {
-    public const APP_NAME = 'Crafting calculator';
+    public const APP_NAME = 'Rubiks Cube Helper';
     public const FW_VERSION = '2.0';
 
     public const DB_HOST = 'localhost';  // change to db, if docker you use docker
-    public const DB_NAME = 'calculator';
+    public const DB_NAME = 'MyDatabase';
     public const DB_USER = 'root'; // change to vaiicko_user, if docker you use docker
     public const DB_PASS = 'dtb456';
 

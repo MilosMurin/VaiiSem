@@ -8,14 +8,14 @@ use App\Helpers\Enums\LearnInfo;
 class UserLearner extends Model {
 
     protected int $userId = 0;
-    protected int $algId = 0;
+    protected int $choiceId = 0;
 
     protected int $info = 0;
 
     public static function create(int $userId, int $algId, int $info): UserLearner {
         $instance = new self();
         $instance->userId = $userId;
-        $instance->algId = $algId;
+        $instance->choiceId = $algId;
         $instance->info = $info;
         return $instance;
     }
@@ -23,7 +23,6 @@ class UserLearner extends Model {
     public static function createNotLearned(int $userId, int $algId): UserLearner {
         return self::create($userId, $algId, LearnInfo::NOT_LEARNED);
     }
-
 
     /**
      * @return int
@@ -35,8 +34,8 @@ class UserLearner extends Model {
     /**
      * @return int
      */
-    public function getAlgId(): int {
-        return $this->algId;
+    public function getChoiceId(): int {
+        return $this->choiceId;
     }
 
     /**
