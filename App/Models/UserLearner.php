@@ -3,12 +3,16 @@
 namespace App\Models;
 
 use App\Core\Model;
-use App\Helpers\Enums\LearnInfo;
+use App\Helpers\Enums\LearnStatus;
+use Exception;
+use PDO;
+use PDOException;
 
 class UserLearner extends Model {
 
     protected int $userId = 0;
     protected int $choiceId = 0;
+    protected int $algId = 0;
 
     protected int $info = 0;
 
@@ -21,7 +25,7 @@ class UserLearner extends Model {
     }
 
     public static function createNotLearned(int $userId, int $algId): UserLearner {
-        return self::create($userId, $algId, LearnInfo::NOT_LEARNED);
+        return self::create($userId, $algId, LearnStatus::NOT_LEARNED);
     }
 
     /**
@@ -41,6 +45,14 @@ class UserLearner extends Model {
     /**
      * @return int
      */
+    public function getAlgId(): int {
+        return $this->algId;
+    }
+
+
+    /**
+     * @return int
+     */
     public function getInfo(): int {
         return $this->info;
     }
@@ -50,5 +62,23 @@ class UserLearner extends Model {
      */
     public function setInfo(int $info): void {
         $this->info = $info;
+    }
+
+
+    /**
+     * @throws Exception
+     */
+    static public function getByAlgId(int $id, int $userId): ?static {
+        if ($id == null || $userId == null) return null;
+
+        try {
+            $sql = "SELECT * FROM `" . static::getTableName() . "` WHERE " . "`algId=? AND userId=?` LIMIT 1";
+            $stmt = self::getConnection()->prepare($sql);
+            $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, static::class);
+            $stmt->execute([$id, $userId]);
+            return $stmt->fetch();
+        } catch (PDOException $e) {
+            throw new Exception('Query failed: ' . $e->getMessage(), 0, $e);
+        }
     }
 }

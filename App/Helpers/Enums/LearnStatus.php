@@ -2,7 +2,7 @@
 
 namespace App\Helpers\Enums;
 
-class LearnInfo {
+class LearnStatus {
 
     const NOT_LEARNED = 0;
     const LEANRNING = 1;

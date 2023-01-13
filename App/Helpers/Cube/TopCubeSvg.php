@@ -62,7 +62,7 @@ class TopCubeSvg {
                 290, 10 + 700 * $i, $this->getColor($this->colors[10 + 6 * $i]));
         } else { // 1 3 -> 0 1
             return sprintf("<rect x=\"%d\" y=\"%d\" width=\"70\" height=\"210\" style=\"fill:%s;stroke-width:4;stroke:black\" />\n",
-                10 + 700 * $i, 290, $this->getColor($this->colors[13 + 6 * $i]));
+                10 + 700 * $i, 290, $this->getColor($this->colors[19 - 6 * $i]));
         }
     }
 
