@@ -26,7 +26,7 @@ use App\Core\IAuthenticator;
 	<link rel="stylesheet" href="../../public/css/index.css">
 </head>
 <body>
-	<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+	<nav class="navbar navbar-expand-sm navbar-dark bg-dark text-white">
 		<a class="navbar-brand" href="?c=home">
 			<img class="logo" src="../../public/res/cube.png" alt="logo">
 		</a>

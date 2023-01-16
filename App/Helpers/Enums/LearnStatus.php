@@ -8,8 +8,11 @@ class LearnStatus {
     const LEANRNING = 1;
     const LEARNED = 2;
 
-    public function getColor(int $i): void {
-        // TODO: setup to return a color to use on page
+    public function getColor(int $i): string {
+        return match ($i) {
+            self::LEANRNING => "yellow",
+            self::LEARNED => "lime",
+            default => "",
+        };
     }
-
 }

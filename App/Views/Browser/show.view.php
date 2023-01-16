@@ -9,12 +9,12 @@ use App\Helpers\Cube\TopCubeSvg;
     <?= (new TopCubeSvg($data["alg"]->getPicture()))->getSVG(200, 200); ?>
 </div>
 
-<div class="row">
-    <?php for ($i = 0; $i < sizeof($data["choices"]); $i++) { ?>
-		<div class="row">
-			<div class="col" style="background-color: <?php if ($data["choices"][$i]->getId() == $data["chosen"]) { ?> yellow <?php } else { ?> white ">
-				<p><?= $data["choices"][$i]->getAlgorithm(); ?></p>
-			</div>
+<div class="row mt-5">
+    <?php for ($i = 0; $i < sizeof($data["choices"]); $i++) {
+        $yellow = $data["choices"][$i]->getId() == $data["chosen"] ?>
+		<div class="row text-center m-0 d-flex align-items-center justify-content-center"
+		     style="background-color:<?php if ($yellow) { ?> yellow <?php } else { ?> white <?php } ?>">
+			<p class="w-50"><?= $data["choices"][$i]->getAlgorithm(); ?></p>
 		</div>
-    <?php } } ?>
+    <?php } ?>
 </div>

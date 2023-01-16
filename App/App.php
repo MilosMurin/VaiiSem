@@ -9,6 +9,7 @@ use App\Core\Request;
 use App\Core\Responses\RedirectResponse;
 use App\Core\Responses\Response;
 use App\Core\Router;
+use Exception;
 
 /**
  * Class App
@@ -46,9 +47,9 @@ class App {
 
     /**
      * Runs the application
-     * @throws \Exception
+     * @throws Exception
      */
-    public function run() {
+    public function run(): void {
         ob_start();
 
         // get a controller and action from URL
@@ -65,7 +66,7 @@ class App {
             if ($response instanceof Response) {
                 $response->generate();
             } else {
-                throw new \Exception("Action {$this->router->getFullControllerName()}::{$this->router->getAction()} didn't return an instance of Response.");
+                throw new Exception("Action {$this->router->getFullControllerName()}::{$this->router->getAction()} didn't return an instance of Response.");
             }
         } else {
             if ($this->auth->isLogged() or !defined('\\App\\Config\\Configuration::LOGIN_URL')) {

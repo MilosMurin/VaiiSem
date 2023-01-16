@@ -1,0 +1,16 @@
+.myBorder {
+    border-style: solid;
+    border-width: 2px;
+}
+
+.minWidthSvg {
+    min-width: 124px;
+}
+
+.maxAlgWidth {
+    max-width: 75%;
+}
+
+.click-learn:hover {
+    cursor: pointer;
+}

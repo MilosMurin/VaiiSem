@@ -25,8 +25,7 @@ class BrowserController extends AControllerBase {
                 try {
                     $data["algs"] = Algorithm::getAll("type=? AND size=?", [$_GET['t'], $_GET['s']]);
                     for ($i = 0; $i < sizeof($data["algs"]); $i++) {
-                        // TODO: Change for getOne
-                        $data["choice"][$i] = AlgorithmChoice::getAll("userId=0 AND algId=?", [$data["algs"][$i]->getId()])[0];
+                        $data["choice"][$i] = (AlgorithmChoice::getAll("userId=0 AND algId=?", [$data["algs"][$i]->getId()]))[0];
                     }
                 } catch (Exception) {
                     return self::index();
