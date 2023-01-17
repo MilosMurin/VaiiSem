@@ -5,7 +5,7 @@ use App\Helpers\Cube\TopCubeSvg;
 
 ?>
 
-<!--	TODO: add borders, painting background based on learning status, add submit button-->
+<!--	TODO: shrink borders, painting background based on learning status, add submit button, sorting based on learning status-->
 <link rel="stylesheet" href="../../../public/css/browse.css">
 <div class="row" style="margin: 0 auto">
     <?php for ($i = 0; $i < sizeof($data["algs"]); $i++) { ?>
@@ -15,12 +15,39 @@ use App\Helpers\Cube\TopCubeSvg;
 					<p class="fs-3 fw-bold"><?= $data["algs"][$i]->getName(); ?></p>
 				</div>
 				<div class="col-1 minWidthSvg click-learn">
-                    <?= (new TopCubeSvg($data["algs"][$i]->getPicture()))->getSVG(100, 100); ?>
+					<?php
+						$cube = new TopCubeSvg($data["algs"][$i]->getPicture());
+                        $alg = $data["choice"][$i]->getAlgorithm();
+						$first = explode($alg, " ")[0];
+						$start = true;
+						switch ($first) {
+							case "y'":
+								$cube->setRotation(90);
+								break;
+							case "y":
+                                $cube->setRotation(270);
+								break;
+							case "y2":
+                                $cube->setRotation(180);
+								break;
+							default:
+								$start = false;
+								break;
+                        }
+						echo $cube->getSVG(100, 100);
+					?>
 				</div>
 				<div class="col-sm-4 text-center ms-md-2 ms-0 mt-md-0 mt-2 maxAlgWidth">
 					<a href="?c=browser&a=show&alg=<?= $data["algs"][$i]->getId() ?>">
 						<p class="fw-bold">
-                            <?= $data["choice"][$i]->getAlgorithm(); ?>
+							<?php
+								if ($start) {
+									$space = strpos($alg, " ");
+									echo substr($alg, $space);
+                                } else {
+                                    echo $alg;
+                                }
+							?>
 						</p>
 					</a>
 				</div>

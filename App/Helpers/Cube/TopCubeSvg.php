@@ -19,16 +19,20 @@ class TopCubeSvg {
         "710,710 500,710 500,780 680,780", "80,710 290,710 290,780 110,780",
         "80,710 80,500 10,500 10,680", "80,80 80,290 10,290 10,110");
 
+    private int $rotation = 0;
+
     /**
      * @param string $stringRepr
      */
     public function __construct(string $stringRepr) {
+        // TODO: Add rotation with y move as first
         $this->colors = explode(",", $stringRepr);
     }
 
 
     public function getSVG(int $width, int $height): string {
         $start = sprintf("<svg width=\"%d\" height=\"%d\" viewBox='0 0 790 790'>\n", $width, $height);
+        $start .= sprintf("<g transform='rotate(%d 395 395)'>\n", $this->rotation);
         for ($i = 0; $i < 3; $i++) {
             for ($j = 0; $j < 3; $j++) { // top
                 $start .= $this->getSvgSquare($i, $j);
@@ -44,7 +48,7 @@ class TopCubeSvg {
                 $start .= $this->getSvgPolygon($i, $j);
             }
         }
-        $start .= "</svg>";
+        $start .= "</g>\n</svg>";
         return $start;
     }
 
@@ -82,5 +86,12 @@ class TopCubeSvg {
             "7" => self::GRAY,
             default => self::BLACK,
         };
+    }
+
+    /**
+     * @param int $rotation
+     */
+    public function setRotation(int $rotation): void {
+        $this->rotation = $rotation;
     }
 }

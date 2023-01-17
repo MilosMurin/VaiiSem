@@ -25,12 +25,14 @@ class UploadController extends AControllerBase {
      */
     public function upload(): Response {
         $formData = $this->app->getRequest()->getPost();
-        $algId = intval($formData["alg"]);
+        if (sizeof(AlgorithmChoice::getAll('algorithm=?', [$formData["alg"]])) > 0) {
+            return $this->html(["message" => "Algorithm was already uploaded by another user!"], "index");
+        }
+        $algId = intval($formData["algId"]);
         $usrId = User::getAll('name=?', [$_SESSION['user']])[0]->getId();
         $choice = AlgorithmChoice::create($algId, $formData["alg"], $usrId);
         $choice->save();
-
-        return $this->html(["message" => "Successfully uploaded!"]);
+        return $this->html(["message" => "Successfully uploaded!"], "index");
     }
 
 }
