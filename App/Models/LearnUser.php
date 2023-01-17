@@ -10,7 +10,7 @@ class LearnUser extends Model {
 
     protected int $id = 0;
     protected int $userId = 0;
-    protected int $choiceId = 0;
+    protected ?int $choiceId = 0;
     protected int $algId = 0;
 
     protected int $info = 0;
@@ -36,9 +36,11 @@ class LearnUser extends Model {
     }
 
     /**
-     * @return int
+     * @return ?int
+     * @throws Exception
      */
-    public function getChoiceId(): int {
+    public function getChoiceId(): ?int {
+        $this->checkChoice();
         return $this->choiceId;
     }
 
@@ -69,6 +71,16 @@ class LearnUser extends Model {
      */
     public function setChoiceId(int $choiceId): void {
         $this->choiceId = $choiceId;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function checkChoice(): void {
+        if ($this->choiceId == null || $this->choiceId == -1) {
+            $this->choiceId = $this->id;
+            $this->save();
+        }
     }
 
 

@@ -19,7 +19,12 @@ use App\Helpers\Cube\TopCubeSvg;
             <?php if ($auth->isLogged()) { ?>
 				<p id="selection_<?= $data["alg"]->getId() ?>_<?= $data["choices"][$i]->getId() ?>" class="selection col-4 w-50 m-0"
 				   style="background-color:<?php echo $lime ?>; cursor: pointer" onclick="onSelectAlgorithm(this)">
-                    <?= $data["choices"][$i]->getAlgorithm(); ?></p>
+                    <?= $data["choices"][$i]->getAlgorithm(); ?>
+                    <?php if ($auth->getLoggedUserId() == $data["choices"][$i]->getUserId()) { ?>
+						<img id="<?= $data["choices"][$i]->getId() ?>" onclick="deleteChoice(this.id)" class="ms-2" src="../../../public/res/cross.png" alt="remove" width="16" height="16">
+                    <?php } ?>
+				</p>
+
             <?php } else { ?>
 	            <p class="col-4 w-50 m-0"><?= $data["choices"][$i]->getAlgorithm(); ?></p>
             <?php } ?>

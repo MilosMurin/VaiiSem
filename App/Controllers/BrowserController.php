@@ -30,6 +30,7 @@ class BrowserController extends AControllerBase {
                     for ($i = 0; $i < sizeof($data["algs"]); $i++) {
                         if ($isLogged) {
                             $learn = (LearnUser::getAll("userId=? AND algId=?", [$usrId, $data["algs"][$i]->getId()]))[0];
+                            $learn->checkChoice();
                             $choiceId = $learn->getChoiceId();
                             $data["color"][$i] = LearnStatus::getColor($learn->getInfo());
                             $data["choice"][$i] = AlgorithmChoice::getOne($choiceId)->getAlgorithm();
@@ -60,7 +61,7 @@ class BrowserController extends AControllerBase {
                         $usrId = $this->app->getAuth()->getLoggedUserId();
                         $data["chosen"] = LearnUser::getByAlgId($_GET['alg'], intval($usrId))->getChoiceId();
                     } else {
-                        $data["chosen"] = -1;
+                        $data["chosen"] = $_GET['alg'];
                     }
 
                 } catch (Exception) {
@@ -83,9 +84,9 @@ class BrowserController extends AControllerBase {
                 $choiceId = intval($ex[2]);
                 if ($algId > 0 && $choiceId > 0) {
                     $usrId = $this->app->getAuth()->getLoggedUserId();
-                    $choice = LearnUser::getAll('algId=? AND userId=?', [$algId, $usrId])[0];
-                    $choice->setChoiceId($choiceId);
-                    $choice->save();
+                    $learn = LearnUser::getAll('algId=? AND userId=?', [$algId, $usrId])[0];
+                    $learn->setChoiceId($choiceId);
+                    $learn->save();
                 }
             }
         }
@@ -102,11 +103,29 @@ class BrowserController extends AControllerBase {
                 $learnId = intval($ex[2]);
                 if ($algId > 0 && $learnId > 0) {
                     $usrId = $this->app->getAuth()->getLoggedUserId();
-                    $choice = LearnUser::getAll('algId=? AND userId=?', [$algId, $usrId])[0];
-                    $choice->setInfo($learnId);
-                    $choice->save();
+                    $learn = LearnUser::getAll('algId=? AND userId=?', [$algId, $usrId])[0];
+                    $learn->checkChoice();
+                    $learn->setInfo($learnId);
+                    $learn->save();
                 }
             }
         }
+    }
+
+
+    /**
+     * @throws Exception
+     */
+    public function delete(): Response {
+        if ($this->app->getAuth()->isLogged()) {
+            if (isset($_GET['id'])) {
+                $choiceId = intval($_GET['id']);
+                if ($choiceId > 0) {
+                    $choice = AlgorithmChoice::getOne($choiceId);
+                    $choice->delete();
+                }
+            }
+        }
+        return $this->redirect("?c=browser");
     }
 }

@@ -18,3 +18,7 @@ function sendUdateId(id) {
     xhttp.open("GET", "?c=browser&a=update&id=" + id, true);
     xhttp.send();
 }
+
+function deleteChoice(id) {
+    window.location.replace("??c=browser&a=delete&id=" + id);
+}

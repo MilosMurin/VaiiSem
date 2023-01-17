@@ -9,19 +9,19 @@ use App\Core\IAuthenticator;
 ?>
 	<div class="container-fluid">
 
-		<div class="row pt-5">
+		<div class="row">
 			<div class="col-md-6 pt-3 text-center d-flex align-items-center justify-content-center">
 				<a href="?c=browser">
-					<img class="w-75 pt-5" src="../../../public/res/sides.png" alt="Calculator"
-					     data-toggle="tooltip" data-placement="top" title="Open crafting calculator">
+					<img class="w-75 pt-5" src="../../../public/res/lens.png" alt="Browse"
+					     data-toggle="tooltip" data-placement="top" title="Browse algorithms">
 				</a>
 			</div>
 
             <?php if ($auth->isLogged()) { ?>
 	            <div class="col-md-6 pt-5 text-center d-flex align-items-center justify-content-center">
 		            <a href="?c=upload">
-			            <img class="w-100 pt-5" src="../../../public/res/book.png" alt="Learn"
-			                 data-toggle="tooltip" data-placement="top" title="Start learning">
+			            <img class="w-100 pt-5" src="../../../public/res/upload.png" alt="Upload"
+			                 data-toggle="tooltip" data-placement="top" title="Upload an algorithm">
 		            </a>
 	            </div>
             <?php } else { ?>

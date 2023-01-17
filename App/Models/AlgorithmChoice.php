@@ -3,9 +3,6 @@
 namespace App\Models;
 
 use App\Core\Model;
-use Exception;
-use PDO;
-use PDOException;
 
 class AlgorithmChoice extends Model {
 
@@ -58,19 +55,5 @@ class AlgorithmChoice extends Model {
      */
     public function getDate(): string {
         return $this->date;
-    }
-
-    static public function getById(int $id): ?static {
-        if ($id == null) return null;
-
-        try {
-            $sql = "SELECT * FROM `" . static::getTableName() . "` WHERE " . "`algId=?` LIMIT 1";
-            $stmt = self::getConnection()->prepare($sql);
-            $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, static::class);
-            $stmt->execute([$id]);
-            return $stmt->fetch();
-        } catch (PDOException $e) {
-            throw new Exception('Query failed: ' . $e->getMessage(), 0, $e);
-        }
     }
 }
