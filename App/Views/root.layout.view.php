@@ -26,7 +26,7 @@ use App\Core\IAuthenticator;
 	<link rel="stylesheet" href="../../public/css/index.css">
 </head>
 <body>
-	<nav class="navbar navbar-expand-sm navbar-dark bg-dark text-white">
+	<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
 		<a class="navbar-brand" href="?c=home">
 			<img class="logo" src="../../public/res/cube.png" alt="logo">
 		</a>
@@ -36,11 +36,11 @@ use App\Core\IAuthenticator;
 		<div class="collapse navbar-collapse" id="collapsibleNavbar">
 			<ul class="navbar-nav">
 				<li class="nav-item">
-					<a class="nav-link" href="?c=browser">Algorithm browser</a>
+					<a class="nav-link text-gray" href="?c=browser">Algorithm browser</a>
 				</li>
                 <?php if ($auth->isLogged()) { ?>
 					<li class="nav-item">
-						<a class="nav-link" href="?c=upload">Algorithm uploader</a>
+						<a class="nav-link text-gray" href="?c=upload">Algorithm uploader</a>
 					</li>
                 <?php } ?>
 			</ul>
@@ -48,12 +48,12 @@ use App\Core\IAuthenticator;
         <?php if ($auth->isLogged()) { ?>
 			<ul class="navbar-nav ms-auto">
 				<li class="nav-item">
-					<a class="nav-link" href="?c=user">
+					<a class="nav-link text-gray" href="?c=user">
 						User: <b><?= $auth->getLoggedUserName() ?></b>
 					</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="?c=home&a=logout">Log out</a>
+					<a class="nav-link text-gray" href="?c=home&a=logout">Log out</a>
 				</li>
 			</ul>
         <?php } ?>

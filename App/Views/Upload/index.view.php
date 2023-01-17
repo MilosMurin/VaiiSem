@@ -1,6 +1,7 @@
 <?php
 /** @var Array $data */
 ?>
+<link rel="stylesheet" href="../../../public/css/upload.css">
 <div id="message" class="text-center text-danger mb-3">
     <?= @$data['message'] ?>
 </div>
@@ -35,9 +36,7 @@
 		<label for="alg" class="col-sm form-label text-sm-end text-center">Insert algorithm:</label>
 		<input class="col-sm" type="text" id="alg" name="alg" placeholder="Algorithm" required>
 	</div>
-
-<!--	TODO: fix button not fully visible on small screens-->
-	<div class="row mb-3 mt-4 mx-auto w-25 d-flex align-items-center justify-content-center">
+	<div class="row mb-3 mt-4 mx-auto w-66 d-flex align-items-center justify-content-center">
 		<button id="submitUpload" type="submit" class="btn btn-primary">Upload</button>
 	</div>
 </form>

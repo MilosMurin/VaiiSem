@@ -12,8 +12,6 @@ use App\Helpers\Cube\TopCubeSvg;
     <?= (new TopCubeSvg($data["alg"]->getPicture()))->getSVG(200, 200); ?>
 </div>
 
-<!--TODO: voting, selecting-->
-
 <div class="row mt-5">
     <?php for ($i = 0; $i < sizeof($data["choices"]); $i++) {
         $lime = $data["choices"][$i]->getId() == $data["chosen"] ? 'lime' : '' ?>

@@ -8,3 +8,7 @@
     max-width: 225px;
     min-width: 150px;
 }
+
+.mycard:hover {
+    transform: scale(1.05);
+}

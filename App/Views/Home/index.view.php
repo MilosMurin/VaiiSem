@@ -3,8 +3,8 @@
 
 /** @var IAuthenticator $auth */
 
-use App\Core\IAuthenticator;
 use App\Config\Configuration;
+use App\Core\IAuthenticator;
 
 ?>
 	<div class="container-fluid">
@@ -14,7 +14,6 @@ use App\Config\Configuration;
 				<a href="?c=browser">
 					<img class="w-75 pt-5" src="../../../public/res/sides.png" alt="Calculator"
 					     data-toggle="tooltip" data-placement="top" title="Open crafting calculator">
-					<!--			TODO: change to an animated and interactive cube-->
 				</a>
 			</div>
 

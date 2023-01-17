@@ -7,9 +7,7 @@ use App\Helpers\Cube\TopCubeSvg;
 <link rel="stylesheet" href="../../../public/css/cards.css">
 <div class="row d-flex align-items-center justify-content-center">
 
-	<!--		TODO: center on small screens, hover effects-->
-
-	<div class="col-lg-3 col-sm-4 text-center me-lg-5 mt-5">
+	<div class="col-lg-3 col-sm-4 mx-auto text-center mt-5">
 		<a href="?c=browser&a=browse&s=3&t=OLL">
 			<div class="mycard py-4 maxMinWidth">
 				<p class="fw-bold fs-5">3x3 OLL</p>
@@ -18,7 +16,7 @@ use App\Helpers\Cube\TopCubeSvg;
 		</a>
 	</div>
 
-	<div class="col-lg-3 col-sm-4 text-center me-lg-5 mt-5">
+	<div class="col-lg-3 col-sm-4 mx-auto text-center mt-5">
 		<a href="?c=browser&a=browse&s=3&t=PLL">
 			<div class="mycard py-4 maxMinWidth">
 				<p class="fw-bold fs-5">3x3 PLL</p>
@@ -27,7 +25,7 @@ use App\Helpers\Cube\TopCubeSvg;
 		</a>
 	</div>
 
-	<div class="col-lg-3 col-sm-4 text-center mt-5">
+	<div class="col-lg-3 col-sm-4 mx-auto text-center mt-5">
 		<a href="?c=browser&a=browse&s=3&t=VW">
 			<div class="mycard py-4 maxMinWidth">
 				<p class="fw-bold fs-5">3x3 VW</p>
