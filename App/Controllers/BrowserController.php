@@ -4,28 +4,40 @@ namespace App\Controllers;
 
 use App\Core\AControllerBase;
 use App\Core\Responses\Response;
+use App\Helpers\Enums\LearnStatus;
 use App\Models\Algorithm;
 use App\Models\AlgorithmChoice;
-use App\Models\UserLearner;
+use App\Models\LearnUser;
 use Exception;
 
 class BrowserController extends AControllerBase {
 
-    // TODO: Change learning utilities (coloring selections, voting) only available for logged in users
     public function index(): Response {
         return $this->html(null, "index");
     }
 
     public function browse(): Response {
-
         if (isset($_GET['s']) && isset($_GET['t'])) {
             if (intval($_GET['s']) > 0) {
                 if ($_GET['s'])
                     $data = [];
                 try {
+                    $isLogged = $this->app->getAuth()->isLogged();
+                    if ($isLogged) {
+                        $usrId = $this->app->getAuth()->getLoggedUserId();
+                    }
                     $data["algs"] = Algorithm::getAll("type=? AND size=?", [$_GET['t'], $_GET['s']]);
                     for ($i = 0; $i < sizeof($data["algs"]); $i++) {
-                        $data["choice"][$i] = (AlgorithmChoice::getAll("userId=0 AND algId=?", [$data["algs"][$i]->getId()]))[0];
+                        if ($isLogged) {
+                            $learn = (LearnUser::getAll("userId=? AND algId=?", [$usrId, $data["algs"][$i]->getId()]))[0];
+                            $choiceId = $learn->getChoiceId();
+                            $data["color"][$i] = LearnStatus::getColor($learn->getInfo());
+                            $data["choice"][$i] = AlgorithmChoice::getOne($choiceId)->getAlgorithm();
+                        } else {
+                            $data["choice"][$i] = AlgorithmChoice::getAll('algId=?', [$data["algs"][$i]->getId()])[0]->getAlgorithm();
+                            $data["color"][$i] = "";
+                        }
+
                     }
                 } catch (Exception) {
                     return self::index();
@@ -41,9 +53,16 @@ class BrowserController extends AControllerBase {
             if (intval($_GET['alg']) > 0) {
                 $data = [];
                 try {
+                    $isLogged = $this->app->getAuth()->isLogged();
                     $data["alg"] = Algorithm::getOne($_GET['alg']);
                     $data["choices"] = AlgorithmChoice::getAll("algId=?", [$_GET['alg']]);
-                    $data["chosen"] = UserLearner::getByAlgId($_GET['alg'], 0);
+                    if ($isLogged) {
+                        $usrId = $this->app->getAuth()->getLoggedUserId();
+                        $data["chosen"] = LearnUser::getByAlgId($_GET['alg'], intval($usrId))->getChoiceId();
+                    } else {
+                        $data["chosen"] = -1;
+                    }
+
                 } catch (Exception) {
                     return self::index();
                 }
@@ -51,5 +70,43 @@ class BrowserController extends AControllerBase {
             }
         }
         return self::index();
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function update() {
+        if ($this->app->getAuth()->isLogged()) {
+            if (isset($_GET['id'])) {
+                $ex = explode("_", $_GET['id']);
+                $algId = intval($ex[1]);
+                $choiceId = intval($ex[2]);
+                if ($algId > 0 && $choiceId > 0) {
+                    $usrId = $this->app->getAuth()->getLoggedUserId();
+                    $choice = LearnUser::getAll('algId=? AND userId=?', [$algId, $usrId])[0];
+                    $choice->setChoiceId($choiceId);
+                    $choice->save();
+                }
+            }
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function updateLearning() {
+        if ($this->app->getAuth()->isLogged()) {
+            if (isset($_GET['id'])) {
+                $ex = explode("_", $_GET['id']);
+                $algId = intval($ex[1]);
+                $learnId = intval($ex[2]);
+                if ($algId > 0 && $learnId > 0) {
+                    $usrId = $this->app->getAuth()->getLoggedUserId();
+                    $choice = LearnUser::getAll('algId=? AND userId=?', [$algId, $usrId])[0];
+                    $choice->setInfo($learnId);
+                    $choice->save();
+                }
+            }
+        }
     }
 }

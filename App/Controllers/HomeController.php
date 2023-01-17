@@ -5,8 +5,9 @@ namespace App\Controllers;
 use App\Core\AControllerBase;
 use App\Core\Responses\Response;
 use App\Helpers\Utils;
-use Exception;
+use App\Models\LearnUser;
 use App\Models\User;
+use Exception;
 
 /**
  * Class HomeController
@@ -14,7 +15,6 @@ use App\Models\User;
  * @package App\Controllers
  */
 class HomeController extends AControllerBase {
-    // TODO: Language fix
 
     /**
      * Authorize controller actions
@@ -55,7 +55,7 @@ class HomeController extends AControllerBase {
                         $data = ["message" => "Username already taken!"];
                     }
                 } else {
-                    $logged = $this->app->getAuth()->login($formData['name'], $formData['pswd']);
+                    $logged = $this->login($formData['name'], $formData['pswd']);
                     if ($logged) {
                         return $this->redirect('?c=home');
                     } else {
@@ -84,11 +84,34 @@ class HomeController extends AControllerBase {
             $newUser = User::create($login, password_hash($password, PASSWORD_DEFAULT), $email);
             try {
                 $newUser->save();
+                $this->setupUserInDB($newUser->getId());
                 $_SESSION['user'] = $login;
                 return true;
             } catch (Exception) {
                 return false;
             }
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function login(string $name, string $pswd): bool {
+        $logged = $this->app->getAuth()->login($name, $pswd);
+        $usrId = User::getAll('name=?', [$name])[0]->getId();
+        if (sizeof(LearnUser::getAll('userId=?', [$usrId])) <= 0) {
+            $this->setupUserInDB($usrId);
+        }
+        return $logged;
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function setupUserInDB(int $userId): void {
+        for ($i = 1; $i <= 78; $i++) {
+            $l = LearnUser::createNotLearned($userId, $i, $i);
+            $l->save();
         }
     }
 }

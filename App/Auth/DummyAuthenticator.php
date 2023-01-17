@@ -3,8 +3,8 @@
 namespace App\Auth;
 
 use App\Core\IAuthenticator;
-use Exception;
 use App\Models\User;
+use Exception;
 
 /**
  * Class DummyAuthenticator
@@ -82,6 +82,10 @@ class DummyAuthenticator implements IAuthenticator {
      * @return mixed
      */
     function getLoggedUserId(): mixed {
+        try {
+            $usr = User::getAll('name=?', [$_SESSION['user']])[0];
+            return $usr->getId();
+        } catch (Exception) { }
         return $_SESSION['user'];
     }
 }

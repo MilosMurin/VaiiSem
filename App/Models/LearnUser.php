@@ -5,27 +5,27 @@ namespace App\Models;
 use App\Core\Model;
 use App\Helpers\Enums\LearnStatus;
 use Exception;
-use PDO;
-use PDOException;
 
-class UserLearner extends Model {
+class LearnUser extends Model {
 
+    protected int $id = 0;
     protected int $userId = 0;
     protected int $choiceId = 0;
     protected int $algId = 0;
 
     protected int $info = 0;
 
-    public static function create(int $userId, int $algId, int $info): UserLearner {
+    public static function create(int $userId, int $algId, int $choiceId, int $info): LearnUser {
         $instance = new self();
         $instance->userId = $userId;
-        $instance->choiceId = $algId;
+        $instance->choiceId = $choiceId;
+        $instance->algId = $algId;
         $instance->info = $info;
         return $instance;
     }
 
-    public static function createNotLearned(int $userId, int $algId): UserLearner {
-        return self::create($userId, $algId, LearnStatus::NOT_LEARNED);
+    public static function createNotLearned(int $userId, int $choiceId, int $algId): LearnUser {
+        return self::create($userId, $algId, $choiceId, LearnStatus::NOT_LEARNED);
     }
 
     /**
@@ -64,21 +64,18 @@ class UserLearner extends Model {
         $this->info = $info;
     }
 
+    /**
+     * @param int $choiceId
+     */
+    public function setChoiceId(int $choiceId): void {
+        $this->choiceId = $choiceId;
+    }
+
 
     /**
      * @throws Exception
      */
-    static public function getByAlgId(int $id, int $userId): ?static {
-        if ($id == null || $userId == null) return null;
-
-        try {
-            $sql = "SELECT * FROM `" . static::getTableName() . "` WHERE " . "`algId=? AND userId=?` LIMIT 1";
-            $stmt = self::getConnection()->prepare($sql);
-            $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, static::class);
-            $stmt->execute([$id, $userId]);
-            return $stmt->fetch();
-        } catch (PDOException $e) {
-            throw new Exception('Query failed: ' . $e->getMessage(), 0, $e);
-        }
+    static public function getByAlgId(int $algId, int $userId): ?static {
+        return self::getAll('algId=? AND userId=?', [$algId, $userId])[0];
     }
 }

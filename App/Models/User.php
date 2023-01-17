@@ -16,7 +16,6 @@ class User extends Model {
         $instance->name = $name;
         $instance->password = $password;
         $instance->email = $email;
-        // TODO: When a new user gets created add to database all user/algchoice connections
         return $instance;
     }
 

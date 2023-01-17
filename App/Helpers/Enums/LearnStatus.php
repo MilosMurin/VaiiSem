@@ -8,7 +8,7 @@ class LearnStatus {
     const LEANRNING = 1;
     const LEARNED = 2;
 
-    public function getColor(int $i): string {
+    public static function getColor(int $i): string {
         return match ($i) {
             self::LEANRNING => "yellow",
             self::LEARNED => "lime",

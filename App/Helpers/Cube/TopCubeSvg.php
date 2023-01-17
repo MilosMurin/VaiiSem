@@ -25,7 +25,6 @@ class TopCubeSvg {
      * @param string $stringRepr
      */
     public function __construct(string $stringRepr) {
-        // TODO: Add rotation with y move as first
         $this->colors = explode(",", $stringRepr);
     }
 

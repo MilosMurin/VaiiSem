@@ -49,11 +49,11 @@ use App\Core\IAuthenticator;
 			<ul class="navbar-nav ms-auto">
 				<li class="nav-item">
 					<a class="nav-link" href="?c=user">
-						Prihlásený používateľ: <b><?= $auth->getLoggedUserName() ?></b>
+						User: <b><?= $auth->getLoggedUserName() ?></b>
 					</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="?c=home&a=logout">Odhlásenie</a>
+					<a class="nav-link" href="?c=home&a=logout">Log out</a>
 				</li>
 			</ul>
         <?php } ?>
