@@ -9,6 +9,8 @@ use App\Helpers\Cube\TopCubeSvg;
     <?= (new TopCubeSvg($data["alg"]->getPicture()))->getSVG(200, 200); ?>
 </div>
 
+<!--TODO: voting, deleting the ones you uploaded, selecting-->
+
 <div class="row mt-5">
     <?php for ($i = 0; $i < sizeof($data["choices"]); $i++) {
         $yellow = $data["choices"][$i]->getId() == $data["chosen"] ?>

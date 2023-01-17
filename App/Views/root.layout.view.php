@@ -39,9 +39,6 @@ use App\Core\IAuthenticator;
 					<a class="nav-link" href="?c=browser">Algorithm browser</a>
 				</li>
                 <?php if ($auth->isLogged()) { ?>
-	                <li class="nav-item">
-		                <a class="nav-link" href="?c=learner">Learner</a>
-	                </li>
 					<li class="nav-item">
 						<a class="nav-link" href="?c=upload">Algorithm uploader</a>
 					</li>

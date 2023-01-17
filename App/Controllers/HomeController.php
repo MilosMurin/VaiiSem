@@ -14,6 +14,8 @@ use App\Models\User;
  * @package App\Controllers
  */
 class HomeController extends AControllerBase {
+    // TODO: Language fix
+
     /**
      * Authorize controller actions
      * @param $action
